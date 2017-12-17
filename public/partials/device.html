@@ -1,0 +1,98 @@
+<div class="page-header">
+	<h1>{{device.name || 'New Device'}}</h1>
+</div>
+
+<message type="{{message.type}}" show="message.show" message="{{message.text}}"></message>
+
+<form novalidate name="formulario" class="row" ng-submit="post()">
+	
+	<div class="row">
+		<div class="col-xs-12 col-sm-6">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="form-group">
+						<label for="name">Name</label>
+						<input class="form-control" id="name" name="name" required ng-minlength="3" ng-maxlength="20" ng-model="device.name" ng-model-options="{debounce:500}"/>
+						<span ng-show="formulario.$submitted && formulario.name.$error.required" class="form-control alert-danger">name obrigatório</span>
+						<span ng-show="formulario.name.$error.maxlength" class="form-control alert-danger">Name too big</span>
+						<span ng-show="formulario.name.$error.minlength" class="form-control alert-danger">Name too short</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="form-group">
+						<label for="feature">Feature</label>
+						<div class="input-group">
+							<input name="feature" class="form-control input-lg" ng-minlength="3" ng-maxlength="20" ng-model="func.name" ng-model-options="{debounce:500}"/>
+							<span class="input-group-addon">
+							<toggle-switch 
+			                	class="switch-mini switch-success"
+			                	html="true"
+			                	on-label='<i class="glyphicon glyphicon-ok"></i>'
+			                	off-label='<i class="glyphicon glyphicon-off"></i>'
+			                	ng-model="func.status">
+			            	</toggle-switch>
+			            	</span>
+			            	<span class="input-group-addon">
+			            		<button type="button" name="newFunc" class="btn btn-sm btn-primary" ng-click="addFeature()"><i class="glyphicon glyphicon-plus"></i></button>
+			            	</span>
+			            </div>
+						<span ng-show="formulario.feature.$error.maxlength" class="form-control alert-danger">Name too big</span>
+						<span ng-show="formulario.feature.$error.minlength" class="form-control alert-danger">Name too short</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<table class="table table-responsive table-bordered table-striped">
+						<thead>
+							<tr>
+								<th colspan="2" class="text-center">Features</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="func in device.features">
+								<td>{{func.name}}</td>
+								<td class="text-center">
+									<button type="button" class="btn btn-sm btn-danger" ng-click="removeFeature(func)"><i class="glyphicon glyphicon-remove"></i></button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-xs-12 col-sm-6">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label for="xml">XML</label>
+						<textarea name="xml" style="height:350px;" class="form-control" ng-model="device.xml"></textarea>
+					</div>
+				</div>
+			</div>			
+			<div class="row">	
+				<div class="col-xs-12">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<input type="submit" name="enviar" value="Save" class="btn btn-success" ng-disabled="formulario.$invalid"/>
+							</div>
+							<div class="col-xs-12 col-sm-6 text-right">
+								<a href="/" class="btn btn-primary">Devices</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-xs-6">
+		<!-- <minha-device status="{{device.status}}" name="{{device.name}}"></minha-device> -->
+	</div>
+</form>
