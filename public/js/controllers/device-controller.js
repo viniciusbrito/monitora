@@ -20,6 +20,14 @@ angular.module('monitora').controller('DeviceController', function($scope, $rout
 
 	$scope.post = function() {
 		if($scope.formulario.$invalid) return;
+		if ($scope.device.features.length == 0) {
+			$scope.message = {
+				"type": "warning",
+				"show": true,
+				"text": "At least one feature is necessary"
+			};
+			return;
+		}
 
 		deviceManager.save($scope.device)
 			.then(function(dados){
@@ -38,7 +46,7 @@ angular.module('monitora').controller('DeviceController', function($scope, $rout
 			});
 	};
 
-	$scope.addFeature = function() {
+	$scope.addFeature = function() {		
 		if($scope.formulario.$invalid) return;
 		$scope.device.features.push(angular.copy($scope.func));		
 		$scope.message = {
