@@ -1,4 +1,4 @@
-angular.module('monitora').controller('DeviceController', function($scope, $routeParams, resourceDevice, deviceManager){
+angular.module('monitora').controller('DeviceController', function($scope, $routeParams, $location, resourceDevice, deviceManager){
 
 	$scope.device = {'name':'', 'features':[], 'xml':''};
 	$scope.message = {"type":"info", "show": false, "text":""};
@@ -34,8 +34,10 @@ angular.module('monitora').controller('DeviceController', function($scope, $rout
 				$scope.message = {
 					"type" : "success",
 					"show" : true,
-					"text" : dados.mensagem
+					"text" : dados.mensagem,
 				};
+				if (dados.inclusao)
+					$location.path('/device/edit/'+dados.id).replace();
 			})
 			.catch(function(dados) {
 				$scope.message = {
@@ -48,6 +50,14 @@ angular.module('monitora').controller('DeviceController', function($scope, $rout
 
 	$scope.addFeature = function() {		
 		if($scope.formulario.$invalid) return;
+		if($scope.func.name.length < 3) {
+			$scope.message = {
+				"type": "warning",
+				"show": true,
+				"text": "Feature name needs at least 3 chars"
+			};
+			return;
+		}
 		$scope.device.features.push(angular.copy($scope.func));		
 		$scope.message = {
 			"type" : "success",

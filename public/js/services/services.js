@@ -1,6 +1,9 @@
 angular.module('services', ['ngResource'])
 	.factory('resourceDevice', function($resource) {
 		return resourceDevice = $resource('http://localhost:8080/api/v1/devices/:deviceId', null, {
+			"save" : {
+				method: "POST"
+			},
 			"update" : {
 				method: "PUT"
 			},
@@ -18,18 +21,36 @@ angular.module('services', ['ngResource'])
 		service.save = function(device) {
 
 			return $q(function(resolv, reject) {
-				resourceDevice.save(device, function() {
-					$rootScope.$broadcast('deviceSaved');
-					resolv({
-						mensagem : 'Device Saved with success',
-						inclusao : true
-					});						
-				}, function(erro){
-					console.log(erro);
-					reject({
-						mensagem : 'Something wrong on create',
-					})
-				});
+				if(device.id) {
+					resourceDevice.update(device, function (data) {
+						$rootScope.$broadcast('deviceUpdated');
+						resolv({
+							mensagem: 'Device Updated with success',
+							inclusao: false
+						});
+					}, function (erro) {
+						console.log(erro);
+						reject({
+							mensagem: 'Something wrong on update',
+						})
+					});
+				}
+				else {
+
+					resourceDevice.save(device, function(data) {
+						$rootScope.$broadcast('deviceSaved');
+						resolv({
+							mensagem : 'Device Saved with success',
+							inclusao : true,
+							id: data.id
+						});						
+					}, function(erro){
+						console.log(erro);
+						reject({
+							mensagem : 'Something wrong on create',
+						})
+					});
+				}
 			});
 		};
 
