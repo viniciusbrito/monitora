@@ -1,6 +1,6 @@
 angular.module('monitora').controller('DeviceController', function($scope, $routeParams, $location, resourceDevice, deviceManager){
 
-	$scope.device = {'name':'', 'features':[], 'xml':''};
+	$scope.device = {'name':'', 'location':'', 'features':[], 'xml':''};
 	$scope.message = {"type":"info", "show": false, "text":""};
 	$scope.func = {'name':'', 'status':true};
 

@@ -16,7 +16,7 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="form-group">
 						<label for="name">Name</label>
-						<input class="form-control" id="name" name="name" required ng-minlength="3" ng-maxlength="20" ng-model="device.name" ng-model-options="{debounce:500}"/>
+						<input class="form-control" id="name" name="name" required ng-minlength="3" ng-maxlength="150" ng-model="device.name" ng-model-options="{debounce:500}"/>
 						<span ng-show="formulario.$submitted && formulario.name.$error.required" class="form-control alert-danger">name obrigatório</span>
 						<span ng-show="formulario.name.$error.maxlength" class="form-control alert-danger">Name too big</span>
 						<span ng-show="formulario.name.$error.minlength" class="form-control alert-danger">Name too short</span>
@@ -27,9 +27,35 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12">
 					<div class="form-group">
+						<label for="location">Location</label>
+						<select class="form-control" id="location" name="location" required ng-model="device.location">
+							<option value="">Select location</option>
+							<option value="not at home">not at home</option>
+							<option value="garage">garage</option>
+							<option value="garden">garden</option>
+							<option value="bathroom">bathroom</option>
+							<option value="bedroom 1">bedroom 1</option>
+							<option value="bedroom 2">bedroom 2</option>
+							<option value="bedroom 3">bedroom 3</option>
+							<option value="living room">living room</option>
+							<option value="dining room">dining room</option>
+							<option value="kitchen">kitchen</option>
+							<option value="hallway">hallway</option>
+							<option value="storage room">storage room</option>
+						</select>
+						<span ng-show="formulario.$submitted && formulario.location.$error.required" class="form-control alert-danger">Location obrigatório</span>
+						<span ng-show="formulario.location.$error.maxlength" class="form-control alert-danger">Location too big</span>
+						<span ng-show="formulario.location.$error.minlength" class="form-control alert-danger">Location too short</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="form-group">
 						<label for="feature">Feature</label>
 						<div class="input-group">
-							<input name="feature" class="form-control input-lg" ng-minlength="3" ng-maxlength="20" ng-model="func.name" ng-model-options="{debounce:500}"/>
+							<input name="feature" class="form-control input-lg" ng-minlength="3" ng-maxlength="200" ng-model="func.name" ng-model-options="{debounce:500}"/>
 							<span class="input-group-addon">
 							<toggle-switch 
 			                	class="switch-mini switch-success"
