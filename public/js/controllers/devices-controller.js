@@ -33,12 +33,12 @@ angular.module('monitora').controller('DevicesController', function($scope, reso
 	};
 
 	$scope.turnOn = (device) => {
-		changeStatus(device, !device.status);
-		let status = device.status? 'Enabled' : 'Disabled';
+		changeStatus(device, !device.status.active);
+		let status = device.status[0].status? 'Enabled' : 'Disabled';
 		$scope.message = {
 			"type" : "info",
 			"show" : true,
-			"text" : "Device: \""+device.name+"\" "+status
+			"text" : "Device: \""+device.name+"\" "+status[0].status
 		};
 	}
 
@@ -66,7 +66,7 @@ angular.module('monitora').controller('DevicesController', function($scope, reso
 			.catch(dados => $scope.message = {"type":"danger", "show":true, "text":dados.mensagem});
 	}
 
-	$scope.turnOnFeature = (device) => {
+	$scope.turnOnStatus = (device) => {
 		deviceManager.save(device)
 			.then(dados => $scope.message = { "type": "success", "show": true, "text": dados.mensagem })
 			.catch(dados => $scope.message = { "type": "danger", "show": true, "text": dados.mensagem });

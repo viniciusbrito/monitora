@@ -1,14 +1,13 @@
 <div class="page-header">
 	<h1>{{device.name || 'New Device'}}</h1>
 </div>
-
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
 		<message type="{{message.type}}" show="message.show" message="{{message.text}}"></message>
 	</div>
 </div>
 
-<form novalidate name="formulario" class="row" ng-submit="post()">
+<form novalidate name="formulario" ng-submit="post()">
 	
 	<div class="row">
 		<div class="col-xs-12 col-sm-6">
@@ -53,18 +52,55 @@
 			<div class="row">
 				<div class="col-xs-12 col-sm-12">
 					<div class="form-group">
+						<label for="status">Status</label>
+						<div class="input-group">
+							<input name="status" class="form-control input-lg" ng-minlength="2" ng-maxlength="200" ng-model="status.name" ng-model-options="{debounce:500}"
+							/>
+							<span class="input-group-addon">
+								<toggle-switch class="switch-mini switch-success" html="true" on-label='<i class="glyphicon glyphicon-ok"></i>' off-label='<i class="glyphicon glyphicon-off"></i>'
+								 ng-model="status.status">
+								</toggle-switch>
+							</span>
+							<span class="input-group-addon">
+								<button type="button" name="newStatus" class="btn btn-sm btn-primary" ng-click="addStatus()">
+									<i class="glyphicon glyphicon-plus"></i>
+								</button>
+							</span>
+						</div>
+						<span ng-show="formulario.status.$error.maxlength" class="form-control alert-danger">Name too big</span>
+						<span ng-show="formulario.status.$error.minlength" class="form-control alert-danger">Name too short</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<table class="table table-responsive table-bordered table-striped">
+						<thead>
+							<tr>
+								<th colspan="2" class="text-center">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="st in device.status">
+								<td>{{st.name}}</td>
+								<td class="text-center">
+									<button type="button" class="btn btn-sm btn-danger" ng-click="removeStatus(st)" ng-show="st.name != 'active'">
+										<i class="glyphicon glyphicon-remove"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12 col-sm-12">
+					<div class="form-group">
 						<label for="feature">Feature</label>
 						<div class="input-group">
 							<input name="feature" class="form-control input-lg" ng-minlength="3" ng-maxlength="200" ng-model="func.name" ng-model-options="{debounce:500}"/>
-							<span class="input-group-addon">
-							<toggle-switch 
-			                	class="switch-mini switch-success"
-			                	html="true"
-			                	on-label='<i class="glyphicon glyphicon-ok"></i>'
-			                	off-label='<i class="glyphicon glyphicon-off"></i>'
-			                	ng-model="func.status">
-			            	</toggle-switch>
-			            	</span>
 			            	<span class="input-group-addon">
 			            		<button type="button" name="newFunc" class="btn btn-sm btn-primary" ng-click="addFeature()"><i class="glyphicon glyphicon-plus"></i></button>
 			            	</span>

@@ -25,7 +25,7 @@
 <hr/>
 <div class="row">
     <div class="col-md-4" ng-repeat="device in devices | orderBy: 'name' | filter: {name: filter}">
-        <div class="panel" ng-class="device.status? 'panel-info': 'panel-default'">
+        <div class="panel" ng-class="device.status[0].status? 'panel-info': 'panel-default'">
             <div class="panel-heading">
                 <div class="row panel-title">
                     <div class="col-xs-9">
@@ -34,16 +34,13 @@
                             @ <strong>{{device.location}}</strong>
                         </h5>
                     </div>
-                    <div class="col-xs-3">
-                        <change-status title="device.status? 'Disable' : 'Enable'" status="{{device.status}}" action="turnOn(device)">
-                    </div>
                 </div>
             </div>            
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="function in device.features">
+                <li class="list-group-item" ng-repeat="st in device.status">
                     <div class="row">
                         <div class="col-xs-8">
-                            {{function.name}}
+                            {{st.name}}
                         </div>
                         <div class="col-xs-4 text-right">
                             <toggle-switch 
@@ -51,9 +48,18 @@
                                 html="true"
                                 on-label='<i class="glyphicon glyphicon-ok"></i>'
                                 off-label='<i class="glyphicon glyphicon-off"></i>'
-                                ng-model="function.status"
-                                ng-change="turnOnFeature(device)">
+                                ng-model="st.status"
+                                ng-change="turnOnStatus(device)">
                             </toggle-switch>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="function in device.features">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            {{function.name}}
                         </div>
                     </div>
                 </li>
